@@ -1,0 +1,228 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第5回学力テスト 範囲表</title>
+    <style>
+        body {
+            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+            color: #333;
+            line-height: 1.6;
+            background-color: #f9f9f9;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            background: #fff;
+            border-radius: 8px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+        }
+        th, td {
+            padding: 15px;
+            border: 1px solid #ddd;
+            vertical-align: top;
+            font-size: 14px;
+        }
+        th {
+            background-color: #2c3e50;
+            color: white;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+        /* 教科ごとの色分け */
+        tr.cat-国語 td:first-child { border-left: 5px solid #e74c3c; }
+        tr.cat-数学 td:first-child { border-left: 5px solid #3498db; }
+        tr.cat-社会 td:first-child { border-left: 5px solid #f1c40f; }
+        tr.cat-理科 td:first-child { border-left: 5px solid #2ecc71; }
+        tr.cat-英語 td:first-child { border-left: 5px solid #9b59b6; }
+        tr.cat-副教科 td:first-child { border-left: 5px solid #95a5a6; }
+
+
+        .subject-col { width: 15%; font-weight: bold; background-color: #f4f6f7; }
+        .range-col { width: 35%; }
+        .submit-col { width: 25%; }
+        .point-col { width: 25%; }
+
+
+        ul { margin: 0; padding-left: 20px; }
+        li { margin-bottom: 5px; }
+        strong {
+            color: #2c3e50;
+            background: #ecf0f1;
+            padding: 0 4px;
+            border-radius: 3px;
+        }
+        .badge {
+            display: inline-block;
+            padding: 2px 6px;
+            font-size: 0.8em;
+            font-weight: bold;
+            color: #fff;
+            border-radius: 4px;
+            margin-bottom: 4px;
+        }
+        .badge-std { background-color: #3498db; }
+        .badge-adv { background-color: #e67e22; }
+        
+        .note-highlight { color: #d35400; font-weight: bold; }
+        .tbd { color: #999; font-style: italic; }
+        small { color: #666; font-size: 0.9em; display: block; margin-top: 4px; }
+        .section-divider { margin: 10px 0; border-top: 1px dashed #ccc; }
+    </style>
+</head>
+<body>
+
+
+    <h1>第5回 学力テスト範囲表</h1>
+
+
+    <div class="table-container">
+        <table id="scopeTable">
+            <thead>
+                <tr>
+                    <th class="subject-col">教科・科目</th>
+                    <th class="range-col">テスト範囲</th>
+                    <th class="submit-col">提出物</th>
+                    <th class="point-col">ポイント・備考</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+        </table>
+    </div>
+
+
+<script>
+    // ==========================================
+    //  ▼ データ定義 ▼
+    //  この並び順の通りに表が表示されます
+    // ==========================================
+    const testData = [
+        // 1. 現代の国語
+        { 
+            category: "国語", 
+            subject: "現代の国語", 
+            range: `<strong>教科書</strong><br>「待ち伏せ」「アイオワの玉葱」「開かれた文化」<br><strong>授業内容</strong>（板書やClassroom）<br><strong>現代文キーワード読解</strong> 第3章「言語」まで<br><small>※週末課題（上級現代文ZERO）は範囲外</small>`, 
+            submission: `<span class="note-highlight">〆切：2月25日(水)</span><br>提出可能：基礎現代文28・29、実テ直し、「開かれた文化」予習、授業課題、小テ直し、共テチャレンジ<br><small>※冬課題、「待ち伏せ」予習は締切済</small>`, 
+            points: `<ul><li><strong>共通：</strong>教科書の漢字は全て読み書きできるように。</li><li><strong>待ち伏せ：</strong>「私」の状態、翻訳と原文の違い、表現の特徴など。</li><li><strong>アイオワの玉葱：</strong>母語の働き、具体の内容の抽象化など。</li><li><strong>開かれた文化：</strong>文化相対主義と「文化相対主義」の違いなど。</li><li><strong>キーワード読解：</strong>小テスト形式。</li></ul>` 
+        },
+        // 2. 古文
+        { 
+            category: "国語", 
+            subject: "言語文化甲<br><small>(古文)</small>", 
+            range: `<strong>教科書 (50点)</strong><br>『竹取物語』「かぐや姫の誕生」「かぐや姫の昇天」<br><small>※文学史・対策プリント含む</small><br><strong>問題集 (20点)</strong><br>プログレス 大問26<br><strong>文法ノート (15点)</strong><br>新明説総合文法ノート 26・27「紛らわしい語句の識別」<br><strong>単語テスト (15点)</strong><br>古文単語小テスト 第1回〜第6回`, 
+            submission: `<strong>プログレス大問26</strong> のみ受付<br><span class="note-highlight">〆切：甲の試験当日</span><br>データ提出：朝8:30まで<br>冊子提出：SHR終了後すぐ`, 
+            points: "単語テストの例文には現代語訳がつかないので、きちんと覚え直すこと" 
+        },
+        // 3. 漢文
+        { category: "国語", subject: "漢文", range: "<span class='tbd'>範囲未定</span>", submission: "期限までにテスト範囲の提示なし", points: "テスト中止案件では？" },
+
+
+        // 4. 数学系 (II, A, 演習)
+        { category: "数学", subject: "数学II標準", range: "教科書 40〜64ページ<br>(Solution 7 60〜96ページ上側まで)", submission: "授業の指示に従う", points: "" },
+        { category: "数学", subject: "数学II速修", range: "教科書 40〜65ページ<br>(Solution 7 60〜108ページまで)", submission: "授業の指示に従う", points: "" },
+        { category: "数学", subject: "数学A", range: "教科書 126〜159ページ (Solution 5 79〜126ページ)<br>教科書 166〜169ページ (Solution 5 134〜140ページまで)", submission: "授業の指示に従う", points: "" },
+        { category: "数学", subject: "数学演習", range: "数学II教科書 8〜38ページ<br>(Solution 7 2〜50ページまで)", submission: "授業の指示に従う", points: "" },
+
+
+        // 5. 社会系 (公共, 地理, 歴史)
+        { 
+            category: "社会", subject: "公共", 
+            range: `<strong>教科書</strong> p.80〜113<br><strong>ノート</strong> p.49〜71<br><small>※p.66〜67は含まない<br>※p.56〜59、76〜79のチェックポイント・演習問題は該当箇所です。</small>`, 
+            submission: "ノート（テスト範囲のページを空欄なしの状態）を、テスト日に提出", 
+            points: "ドント式計算、惜敗率計算、未成年者取消権などの用語説明" 
+        },
+        { 
+            category: "社会", subject: "地理", 
+            range: `<strong>教科書</strong> 152〜188ページ<br><strong>新地理総合ノート</strong> 86〜104ページ＋70,74,78ページ<br><ul><li>アメリカ合衆国・カナダ</li><li>東アジア</li><li>ヨーロッパ</li></ul>`, 
+            submission: "新地理総合ノート。<br>テスト当日放課後、係が集めて職員室金丸まで提出", 
+            points: "予想問題を配信済み。<br>漢字で学習した語句は漢字で書くこと。" 
+        },
+        { 
+            category: "社会", subject: "歴史", 
+            range: `<strong>教科書</strong> P.114〜147<br><strong>ノート</strong> P.60〜79<br><small>（世界恐慌〜冷戦の始まりと東アジア諸国の動向）</small><br><br><strong>ゼミナール歴史総合</strong><br>P.38〜46、48<br><small>問題番号：62〜65、67、69〜76、78、79、82、83</small>`, 
+            submission: `<strong>ゼミナール歴史総合</strong><br>（解答・復習済みのもの）<br><span class="note-highlight">提出日：2月25日（水）終礼後</span><br>クラスで集めて職員室まで`, 
+            points: "１年生最後のテストです。成績も確定します。しっかり学習しましょう。" 
+        },
+
+
+        // 6. 理科系 (物理, 化学, 生物)
+        { category: "理科", subject: "物理基礎", range: "教科書 p.65〜p.83<br>問題集 p.32〜p.49", submission: "授業で使用のノート<br>テスト終了後、係で集めて物理第一教室まで提出", points: "" },
+        { 
+            category: "理科", subject: "化学基礎", 
+            range: `<strong>物質量～濃度</strong><br>教科書 p.94〜105<br>Let's Try Note Vol.2 p.12〜26<br>対策プリント（解答は18日配信）`, 
+            submission: "授業の指示に従う", points: "原子量・アボガドロ定数は覚えておく必要は無し" 
+        },
+        { 
+            category: "理科", subject: "生物", 
+            range: `<strong>教科書</strong> p.74〜105<br><small>※「発展」はワークシートとリードαの内容のみ</small><br><strong>リードα</strong> p.41〜43, 29番など指定問題`, 
+            submission: "授業の指示に従う", points: "" 
+        },
+
+
+        // 7. 英語系
+        { 
+            category: "英語", subject: "英語コミュ", 
+            range: `<span class="badge badge-std">標準</span> <span class="badge badge-adv">発展</span> 共通<br><strong>教科書</strong><br>Chapter 9 (p.130-139)<br>Chapter 10 (p.146-153)<br><strong>コーパス4500</strong> p.382-391<br><small>※普段の単語テストと同じ形式</small><div class="section-divider"></div><span class="badge badge-adv">発展</span> のみ<br>※教科書の内容に関する初見の英文も入る可能性あり`, 
+            submission: "授業の指示に従う", points: "" 
+        },
+        { 
+            category: "英語", subject: "論理・表現", 
+            range: `<span class="badge badge-std">標準</span><br><strong>教科書</strong> Lesson 10 (p.87-94)<br><strong>英語の構文150</strong> #13-#16 (p.36-45)<br><small>※例文、Exercises 1-4</small><br><strong>コーパス4500</strong> p.392-401<div class="section-divider"></div><span class="badge badge-adv">発展</span><br><strong>教科書</strong> Lesson 4 (p.35-44)<br><strong>SKYWARD</strong> 該当箇所(仮定法・接続詞)<br><strong>英語の構文150</strong> #13-#16<br><small>※初見の英文も入る可能性あり</small><br><strong>コーパス4500</strong> p.392-401`, 
+            submission: "授業の指示に従う", points: "" 
+        },
+
+
+        // 8. 副教科
+        { 
+            category: "副教科", subject: "家庭基礎", 
+            range: `<strong>プリント</strong> No.29〜37<br><strong>教科書</strong><br>衣生活：P.162〜163<br>住生活：P.174〜199、P.242〜243<br>消費・経済：P.200〜227<br><strong>資料集</strong> P.86〜87、P.94〜97`, 
+            submission: "", points: "<span class='note-highlight'>テスト日：2月20日</span>" 
+        },
+        { 
+            category: "副教科", subject: "保健", 
+            range: `<strong>教科書</strong> P.60〜65・68〜73<br><strong>ノート</strong> P.44〜55`, 
+            submission: "ノート提出（チェックあり）<br><small>※各単元のまとめが書けているか確認</small>", points: "選択問題と記述問題があります。" 
+        }
+    ];
+
+
+    // ==========================================
+    //  ▼ 表示ロジック ▼
+    // ==========================================
+    const tableBody = document.getElementById('tableBody');
+    let html = "";
+    
+    // 配列の順番通りに表示します（自動ソートなし）
+    testData.forEach(item => {
+        html += `
+            <tr class="cat-${item.category}">
+                <td class="subject-col">
+                    <span style="font-size:0.8em; color:#7f8c8d;">${item.category}</span><br>
+                    ${item.subject}
+                </td>
+                <td class="range-col">${item.range}</td>
+                <td class="submit-col">${item.submission || "ー"}</td>
+                <td class="point-col">${item.points || "ー"}</td>
+            </tr>
+        `;
+    });
+    tableBody.innerHTML = html;
+
+
+</script>
+
+
+</body>
+</html>
